@@ -96,7 +96,9 @@ def classy_menu_item(path, text, **kwargs):
        The *kwargs* arguments.
     """
     def func_wrap(f):
-        expected = inspect.getargspec(f).args
+        expected = kwargs.get('expected')
+        if not 'expected' in kwargs.keys():
+            expected = inspect.getargspec(f).args
         if 'self' in expected:
             expected.remove('self')
         item = dict(path=path, text=text, expected_args=expected, **kwargs)
